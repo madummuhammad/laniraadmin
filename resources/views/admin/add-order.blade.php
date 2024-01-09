@@ -25,8 +25,8 @@
 															<div class="card-body p-0">
 																<div class="products-single fix">
 																	<div class="box-img-hover">
-																		<a href="{{url('order/po/add/')}}/{{$id}}?product_id={{$value->id}}">
-																			<img src="{{url('image/product')}}/{{$value->photo}}">
+																		<a href="{{url('order/po/add/detail/')}}/{{$id}}?product_id={{$value->id}}">
+																			<img class="img-fluid" src="{{url('image/product')}}/{{$value->photo}}">
 																		</a>
 																	</div>
 																	<div class="why-text">

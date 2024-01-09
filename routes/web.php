@@ -61,6 +61,7 @@ Route::group(['prefix' => '/','middleware'=>'auth'], function() {
 	Route::get('/order/ready_stock',[OrderController::class,'ready_stock']);
 	Route::post('/order/ready_stock',[OrderController::class,'filter_rs']);
 	Route::get('/order/ready_stock/{id}',[OrderController::class,'detail_rs']);
+	Route::post('/order/delete/',[OrderController::class,'deleteOrder']);
 
 	Route::post('/order/change_status',[OrderController::class,'change_status']);
 	Route::post('/order/change_resi',[OrderController::class,'change_resi']);

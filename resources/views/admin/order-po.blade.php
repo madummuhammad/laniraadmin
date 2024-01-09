@@ -100,28 +100,53 @@
                Rp{{number_format($value->total)}}
             </td>
             <td>
-               <a href="{{url('order/po')}}/{{$value->id}}" class="btn btn-success btn-sm">Detail Order</a>
-            </td>
-         </tr>
-         @php $total=$total+$value->total @endphp
-         @endforeach
+               <div class="d-flex">                  
+                  <a href="{{url('order/po')}}/{{$value->id}}" class="btn btn-success btn-sm">Detail Order</a>
+                  @if(auth()->user()->username=='superuser')
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#modal-hapus{{$value->id}}">Hapus</button>
+                  <div class="modal fade" id="modal-hapus{{$value->id}}">
+                   <div class="modal-dialog modal-dialog-centered  modal-sm">
+                     <form action="{{url('order/delete')}}" method="POST">        
+                       @csrf                        
+                       <div class="modal-content">
+                         <div class="modal-header p-1">
+                           <h5 class="modal-title">Anda akan menghapus order ini?</h5>
+                           <input type="text" name="id" value="{{$value->id}}" hidden>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                          </button>
+                       </div>
+                       <div class="modal-footer justify-content-end p-1">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      @endif
+   </td>
+</tr>
+@php $total=$total+$value->total @endphp
+@endforeach
 
-      </tbody>
-      <tfoot>
-        <tr>
-          <th>Order ID</th>
-          <td>Tanggal</td>
-          <td>Konfirmasi</td>
-          <td>No Resi</td>
-          <td>Total</td>
-          <td>Detail</td>
-       </tr>
-    </tfoot>
- </table>
- <div class="d-flex justify-content-between mt-5">
-    <p>Total</p>
-    <h5 class="fw-bold">Rp{{number_format($total)}}</h5>
- </div>
+</tbody>
+<tfoot>
+  <tr>
+    <th>Order ID</th>
+    <td>Tanggal</td>
+    <td>Konfirmasi</td>
+    <td>No Resi</td>
+    <td>Total</td>
+    <td>Detail</td>
+ </tr>
+</tfoot>
+</table>
+<div class="d-flex justify-content-between mt-5">
+ <p>Total</p>
+ <h5 class="fw-bold">Rp{{number_format($total)}}</h5>
+</div>
 </div>
 </div>
 </div>

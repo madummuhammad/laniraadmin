@@ -9,6 +9,8 @@ use App\Models\Order;
 use App\Models\ConfirmPayment;
 use App\Models\OrderItem;
 use PDF;
+use Auth;
+use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     public function ready_stock()
@@ -21,6 +23,46 @@ class OrderController extends Controller
     {
         $data['order']=Order::where('order_type','PO')->with('payment_confirm')->orderBy('created_at','DESC')->get();
         return view('admin.order-po',$data);
+    }
+
+    public function deleteOrder()
+    {
+        $id=request('id');
+        $order=Order::where('id',$id)->first();
+        $data=[
+            'order_id'=>$order->id,
+            'order_time'=>$order->order_time,
+            'order_status'=>$order->order_status,
+            'confirm_payment'=>$order->confirm_payment,
+            'member_id'=>$order->member_id,
+            'order_email'=>$order->order_email,
+            'nama_penerima'=>$order->nama_penerima,
+            'order_tel'=>$order->order_tel,
+            'address'=>$order->address,
+            'catatan'=>$order->catatan,
+            'phone'=>$order->phone,
+            'provinsi'=>$order->provinsi,
+            'distrik'=>$order->distrik,
+            'tipe'=>$order->tipe,
+            'ekspedisi'=>$order->ekspedisi,
+            'paket'=>$order->paket,
+            'estimasi'=>$order->estimasi,
+            'ongkir'=>$order->ongkir,
+            'berat'=>$order->berat,
+            'voucher'=>$order->voucher,
+            'resi'=>$order->resi,
+            'total'=>$order->total,
+            'phone_dropship'=>$order->phone_dropship,
+            'sender_dropship'=>$order->sender_dropship,
+            'order_type'=>$order->order_typ,
+            'user_id'=>Auth::user()->id
+        ];
+
+        DB::table('order_deletes')->insert($data);
+        Order::where('id',$id)->delete();
+        OrderItem::where('order_id',$id)->delete();
+        ConfirmPayment::where('order_id',$id)->delete();
+        return back();
     }
 
     public function filter_rs(){

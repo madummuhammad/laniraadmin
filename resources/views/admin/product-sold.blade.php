@@ -76,7 +76,9 @@
      filename:'Produk-terjual'
    }
    ]
- }).buttons().container().appendTo('#excel');
+ })
+
+  memberTable.buttons().container().appendTo('#excel');
 
   $('#cari').on('click', function() {
    var searchText = $("#search").val();

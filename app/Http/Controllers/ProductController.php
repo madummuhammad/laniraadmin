@@ -142,7 +142,7 @@ class ProductController extends Controller
                     'product_id'=>$id,
                     'size'=>$size[$i],
                     'stok'=>$stok[$i],
-                    'price'=>$stok[$i]
+                    'price'=>$price[$i]
                 ]
             );
         }
